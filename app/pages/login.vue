@@ -24,7 +24,7 @@ const auth = useAuth()
 const onSubmit = handleSubmit(
   async (values) => {
     try {
-      auth.login(values.email, values.password)
+      await auth.login(values.email, values.password)
 
       return navigateTo('/dashboard')
     } catch (error) {

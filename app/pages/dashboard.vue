@@ -8,6 +8,22 @@ const logout = auth.logout
 
 <template>
     <h1>Dashboard</h1>
-    <NuxtLink to="/protectedPage">Protected Page</NuxtLink>
-    <button @click="logout">Logout</button>
+    <h3>Menu</h3>
+    <ul>
+      <li>Blog</li>
+      <li>
+        <NuxtLink to="/protectedPage">Protected Page</NuxtLink>
+      </li>
+    </ul>
+    <h5>Admin</h5>
+    <ul>
+      <li>
+        <NuxtLink to="/admin/users/">Users</NuxtLink>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <button @click="logout">Logout</button>
+      </li>
+    </ul>  
 </template>

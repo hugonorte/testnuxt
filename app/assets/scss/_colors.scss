@@ -1,0 +1,25 @@
+ @use "sass:color";
+// ========
+//   BASIC
+// ========
+$primary :#0f394d;
+$secondary :#161f24;
+$white :#ffffff;
+$error :#6d0909;
+
+// ========
+//   SIDE NAV
+// ========
+$link :color-mix(in srgb, $primary 20%, white 80%);
+$visited :color-mix(in srgb, $primary 30%, white 70%);
+$hover :color-mix(in srgb, $primary 40%, white 60%);
+$active :$link;
+$nav_background : $primary;
+
+// ============
+//   TOP NAV
+// ============
+$topnav_link: color.mix($secondary, $white, 80%);
+$topnav_active: $topnav_link;
+$topnav_visited: color.mix($secondary, $white, 90%);
+$topnav_hover: color.mix($secondary, $white, 50%);;

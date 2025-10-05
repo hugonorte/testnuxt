@@ -1,5 +1,5 @@
 import { defineNuxtRouteMiddleware, navigateTo } from 'nuxt/app'
-import { useAuth } from '../app/composables/useAuth'
+import { useAuth } from '../composables/useAuth'
 
 const isAuthenticated = () => {
   const { token } = useAuth()
