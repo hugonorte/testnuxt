@@ -22,3 +22,25 @@ export async function fetchOneUser(userId: string) {
     throw error;
   }
 }
+
+export async function fetchAllUsers() {
+
+    try {
+        const options = {
+            method: 'GET' as 'GET',
+            credentials: 'include' as RequestCredentials,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            } as Record<string, string>,
+        };
+
+        const data = await $fetch<User[]>(`${VITE_EXTERNAL_API_URL}/users`, options);
+
+        return data;
+
+  } catch (error) {
+    console.error('API - Error during fetch:', error);
+    throw error;
+  }
+}
