@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref, nextTick } from 'vue'
 import { fetchOneUser } from '~/api/user/get'
-import type { User } from '~/types/models'
+import type { User as User } from '~/types/models'
 import { z } from 'zod'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, useField } from 'vee-validate'
-
+import { changeUser } from '~/api/user/patch'
 const route = useRoute()
 const userId = route.params.id as string
+
 const User = ref<User | null>(null)
 
 const initialValues = ref({
@@ -35,7 +36,20 @@ const { value: emailField, errorMessage: emailError } = useField<string>('email'
 
 const onSubmit = handleSubmit(
   async (values) => {
-    console.log(values)
+    const updatedUser: User = {
+      id: route.params.id as unknown as number,
+      first_name: values.first_name,
+      last_name: values.last_name,
+      email: values.email,
+    }
+
+    try {
+      await changeUser(updatedUser);
+      resetForm();
+    } 
+    catch (error) {
+      console.error('PAGE - Error updating user:', error);
+    }
   },
   (validationErrors) => {
     console.error('❌ Erros de validação:', validationErrors.errors)
@@ -44,6 +58,7 @@ const onSubmit = handleSubmit(
 
 const fetchOneUserAsync = async () => {
   try {
+    
     const user = await fetchOneUser(userId)
     User.value = user
 
@@ -65,11 +80,10 @@ const fetchOneUserAsync = async () => {
 onMounted(fetchOneUserAsync)
 </script>
 
-
 <template>
   <div>
     <h1>User Details</h1>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmit" method="PATCH">
         <fieldset>
             <div>
                 <label for="first_name">Primeiro Nome</label>
