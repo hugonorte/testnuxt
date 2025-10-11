@@ -15,7 +15,7 @@ useHead({
 </script>
 
 <template>
-  <div class="main_container">
+  <div class="main_layout_container">
     <div class="left">
       <NavLeft />
     </div>
