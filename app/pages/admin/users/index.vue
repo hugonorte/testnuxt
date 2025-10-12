@@ -2,6 +2,7 @@
 import type { User } from '@/types/models'
 import { ref, onMounted } from 'vue'
 import { fetchAllUsers } from '@/api/user/get'
+import {deleteUser} from '@/api/user/delete'
 
 const users = ref<User[]>([])
 
@@ -13,6 +14,15 @@ const fetchUsers = async () => {
   }
 }
 onMounted(fetchUsers)
+
+const handleDelete = async (userId: string) => {
+  try {
+    await deleteUser(Number(userId))
+    users.value = users.value.filter(user => user.id !== Number(userId))
+  } catch (error) {
+    console.error('Error deleting user:', error)
+  }
+}
 
 </script>
 <template>
@@ -30,7 +40,8 @@ onMounted(fetchUsers)
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Actions</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -42,6 +53,9 @@ onMounted(fetchUsers)
                     <NuxtLink :to="`/admin/users/edit/${user.id}`">
                         <button>Edit</button>
                     </NuxtLink>
+                </td>
+                <td>
+                    <button @click="handleDelete(String(user.id))">Delete</button>
                 </td>
             </tr>
         </tbody>
